@@ -398,6 +398,42 @@ section h2 {
   margin-bottom: 56px;
 }
 
+/* ── WORKSPACE PREVIEW ── */
+.preview-section {
+  padding: 120px 24px;
+  border-top: 1px solid var(--border);
+}
+.preview-frame {
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: 0 32px 100px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.04);
+  background: #06060f;
+}
+.preview-chrome {
+  background: #111122;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.preview-title {
+  margin: 0 auto;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.preview-body {
+  padding: 0;
+  line-height: 0;
+}
+.office-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 /* ── FEATURES ── */
 .features {
   padding: 120px 24px;

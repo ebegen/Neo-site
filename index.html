@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neo — AI Multi-Agent Workspace</title>
+  <meta name="description" content="Neo is a native macOS app that puts a team of AI agents to work for you. Assign tasks, watch them think, and get results — in real time." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">
+        <span class="logo-mark">N</span>
+        <span class="logo-text">Neo</span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#features">Features</a></li>
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="https://github.com/ebegen/Neo-site" target="_blank" class="btn-ghost">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow glow-1"></div>
+    <div class="hero-glow glow-2"></div>
+    <div class="hero-inner">
+      <div class="badge">macOS · Native SwiftUI</div>
+      <h1>Your AI team,<br /><span class="gradient-text">always at work.</span></h1>
+      <p class="hero-sub">
+        Neo is a native macOS workspace where a team of AI agents collaborate in real time —
+        thinking, talking, and delivering results while you stay in control.
+      </p>
+      <div class="hero-cta">
+        <a href="#features" class="btn-primary">Explore Features</a>
+        <a href="https://github.com/ebegen/Neo-site" target="_blank" class="btn-outline">View on GitHub</a>
+      </div>
+      <!-- App Window Mockup -->
+      <div class="window-mockup">
+        <div class="window-chrome">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+          <span class="window-title">Neo</span>
+        </div>
+        <div class="window-body">
+          <div class="sidebar">
+            <div class="sidebar-title">Projects</div>
+            <div class="sidebar-item active">
+              <span class="folder-icon">📁</span> Neo App
+            </div>
+            <div class="sidebar-item">
+              <span class="folder-icon">📁</span> GexamWeb
+            </div>
+            <div class="sidebar-item">
+              <span class="folder-icon">📁</span> DataSync
+            </div>
+            <div class="sidebar-add">+ New Project</div>
+          </div>
+          <div class="team-panel">
+            <div class="team-title">Team · Neo App</div>
+            <div class="agent-grid">
+              <div class="agent-card thinking">
+                <div class="agent-avatar" style="background: linear-gradient(135deg,#6366f1,#8b5cf6)">💻</div>
+                <div class="agent-name">Alex</div>
+                <div class="agent-role">Developer</div>
+                <div class="agent-status thinking-dot">Thinking…</div>
+              </div>
+              <div class="agent-card speaking">
+                <div class="agent-avatar" style="background: linear-gradient(135deg,#ec4899,#f43f5e)">🎨</div>
+                <div class="agent-name">Maya</div>
+                <div class="agent-role">Designer</div>
+                <div class="agent-status speaking-dot">Speaking</div>
+              </div>
+              <div class="agent-card">
+                <div class="agent-avatar" style="background: linear-gradient(135deg,#10b981,#059669)">🔬</div>
+                <div class="agent-name">Sam</div>
+                <div class="agent-role">Analyst</div>
+                <div class="agent-status idle-dot">Idle</div>
+              </div>
+              <div class="agent-card">
+                <div class="agent-avatar" style="background: linear-gradient(135deg,#f59e0b,#d97706)">👔</div>
+                <div class="agent-name">Kai</div>
+                <div class="agent-role">Supervisor</div>
+                <div class="agent-status idle-dot">Idle</div>
+              </div>
+            </div>
+          </div>
+          <div class="workspace-panel">
+            <div class="workspace-bg">
+              <div class="ws-avatar ws-a1">💻</div>
+              <div class="ws-avatar ws-a2">🎨</div>
+              <div class="ws-avatar ws-a3">🔬</div>
+              <div class="ws-avatar ws-a4">👔</div>
+              <div class="ws-lines">
+                <div class="ws-line"></div>
+                <div class="ws-line"></div>
+                <div class="ws-line"></div>
+              </div>
+            </div>
+            <div class="workspace-feed">
+              <div class="feed-item"><span class="feed-dot green"></span><span class="feed-agent">Alex</span> · Analyzing codebase…</div>
+              <div class="feed-item"><span class="feed-dot blue"></span><span class="feed-agent">Maya</span> · "I'll handle the UI layout"</div>
+              <div class="feed-item"><span class="feed-dot orange"></span><span class="feed-agent">Kai</span> · Delegating subtasks…</div>
+            </div>
+            <div class="workspace-input">
+              <span>Build the onboarding flow</span>
+              <span class="send-icon">▶</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="section-inner">
+      <div class="section-badge">Features</div>
+      <h2>Everything your AI team needs</h2>
+      <p class="section-sub">Neo brings together project management, agent orchestration, and real-time collaboration in a single native macOS window.</p>
+      <div class="features-grid">
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(99,102,241,.15);color:#818cf8">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Multi-Agent Teams</h3>
+          <p>Build teams from role-based templates — Developer, Designer, Analyst, Supervisor. Each agent has its own LLM provider and model.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(16,185,129,.15);color:#34d399">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          </div>
+          <h3>Real-Time Events</h3>
+          <p>Watch agents think, speak and go idle in real time via WebSocket. Status badges and activity feed update live as your team works.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(245,158,11,.15);color:#fbbf24">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="1.8"/></svg>
+          </div>
+          <h3>Project Management</h3>
+          <p>Organise work into projects. Each project has its own team, task history, and persistent WebSocket channel.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(236,72,153,.15);color:#f472b6">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Natural Task Input</h3>
+          <p>Type a task in plain English. The supervisor agent delegates to the right team members and coordinates the response automatically.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(59,130,246,.15);color:#60a5fa">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Native macOS Security</h3>
+          <p>Built with App Sandbox and Hardened Runtime. Network access is scoped to localhost by default — your data never leaves your machine.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon" style="background:rgba(139,92,246,.15);color:#a78bfa">
+            <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/><path stroke="currentColor" stroke-width="1.8" stroke-linecap="round" d="M12 8v4l3 3"/></svg>
+          </div>
+          <h3>3D Workspace <span class="coming-soon">Coming soon</span></h3>
+          <p>A Unity Metal view will replace the placeholder workspace — a living 3D office where your agents walk, talk and collaborate visually.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="section-inner">
+      <div class="section-badge">How it works</div>
+      <h2>From task to result in seconds</h2>
+      <p class="section-sub">Neo's LangGraph supervisor pattern routes tasks to the best agent, collects results, and streams updates back to you.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-content">
+            <h3>Create a project &amp; team</h3>
+            <p>Add a project, then pick agents from role templates. Mix OpenAI, Anthropic, and Ollama models in the same team.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-content">
+            <h3>Send a task</h3>
+            <p>Type your task in the workspace input. The supervisor decomposes it and assigns subtasks to the right agents.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-content">
+            <h3>Watch it happen live</h3>
+            <p>Agent status badges flip to Thinking → Speaking → Idle. The activity feed shows every message as it arrives over WebSocket.</p>
+          </div>
+        </div>
+        <div class="step-arrow">→</div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-content">
+            <h3>Get the result</h3>
+            <p>The supervisor aggregates all agent outputs and delivers a final answer. Task complete.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STACK -->
+  <section class="stack" id="stack">
+    <div class="section-inner">
+      <div class="section-badge">Tech stack</div>
+      <h2>Built on rock-solid foundations</h2>
+      <div class="stack-grid">
+        <div class="stack-col">
+          <div class="stack-label">macOS App</div>
+          <ul>
+            <li><span class="pill purple">SwiftUI</span> Native macOS 14+ UI</li>
+            <li><span class="pill blue">Observation</span> @Observable state</li>
+            <li><span class="pill indigo">URLSession</span> async/await networking</li>
+            <li><span class="pill violet">WebSocket</span> Live event stream</li>
+            <li><span class="pill pink">Unity</span> 3D Metal view (coming)</li>
+          </ul>
+        </div>
+        <div class="stack-divider"></div>
+        <div class="stack-col">
+          <div class="stack-label">Backend</div>
+          <ul>
+            <li><span class="pill green">FastAPI</span> Async REST + WebSocket</li>
+            <li><span class="pill teal">LangGraph</span> Supervisor agent pattern</li>
+            <li><span class="pill emerald">LangChain</span> OpenAI · Anthropic · Ollama</li>
+            <li><span class="pill cyan">SQLAlchemy</span> Async ORM + Alembic</li>
+            <li><span class="pill sky">SQLite / Postgres</span> Dev &amp; prod DB</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <div class="cta-glow"></div>
+    <div class="section-inner cta-inner">
+      <h2>Ready to meet your team?</h2>
+      <p>Neo is open source and under active development. Star the repo, try it out, and help shape what comes next.</p>
+      <div class="cta-buttons">
+        <a href="https://github.com/ebegen/Neo-site" target="_blank" class="btn-primary">View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="logo">
+        <span class="logo-mark">N</span>
+        <span class="logo-text">Neo</span>
+      </div>
+      <p class="footer-copy">Built with SwiftUI &amp; FastAPI · 2026</p>
+      <a href="https://github.com/ebegen/Neo-site" target="_blank" class="footer-gh">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>

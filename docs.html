@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neo — Documentation</title>
+  <meta name="description" content="Complete usage guide for Neo macOS App and White Rabbit CLI. Setup, configuration, deployment, and examples." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="docs.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="logo">
+        <a href="index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit">
+          <span class="logo-mark">N</span>
+          <span class="logo-text">Neo</span>
+        </a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="#getting-started">Getting Started</a></li>
+        <li><a href="#macos-app">macOS App</a></li>
+        <li><a href="#cli">CLI</a></li>
+        <li><a href="#deployment">Deployment</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="docs-hero">
+    <div class="hero-glow glow-1"></div>
+    <div class="section-inner">
+      <div class="badge">Documentation</div>
+      <h1>Usage Guide</h1>
+      <p class="hero-sub">
+        Everything you need to set up, configure, and use Neo — from your first project to deploying builds via TestFlight, GitHub Pages, and email.
+      </p>
+      <div class="docs-toc">
+        <div class="toc-title">Contents</div>
+        <div class="toc-grid">
+          <a href="#getting-started" class="toc-item">
+            <span class="toc-num">01</span>
+            <span class="toc-label">Getting Started</span>
+          </a>
+          <a href="#macos-app" class="toc-item">
+            <span class="toc-num">02</span>
+            <span class="toc-label">macOS App Guide</span>
+          </a>
+          <a href="#cli" class="toc-item">
+            <span class="toc-num">03</span>
+            <span class="toc-label">CLI (White Rabbit)</span>
+          </a>
+          <a href="#deployment" class="toc-item">
+            <span class="toc-num">04</span>
+            <span class="toc-label">Deployment & Distribution</span>
+          </a>
+          <a href="#settings" class="toc-item">
+            <span class="toc-num">05</span>
+            <span class="toc-label">Settings & Credentials</span>
+          </a>
+          <a href="#qa-gate" class="toc-item">
+            <span class="toc-num">06</span>
+            <span class="toc-label">QA Gate & DevOps Flow</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- GETTING STARTED -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section" id="getting-started">
+    <div class="section-inner">
+      <div class="section-badge">01</div>
+      <h2>Getting Started</h2>
+      <p class="section-sub">Set up the Neo backend, macOS app, and optionally the CLI in minutes.</p>
+
+      <div class="docs-card">
+        <h3>Prerequisites</h3>
+        <ul class="docs-list">
+          <li>macOS 14 (Sonoma) or later</li>
+          <li>Python 3.11+ (for the backend server)</li>
+          <li>Go 1.21+ (only if you want the CLI)</li>
+          <li>At least one LLM API key (OpenAI, Anthropic, or Ollama installed locally)</li>
+        </ul>
+      </div>
+
+      <div class="docs-card">
+        <h3>1. Start the Backend Server</h3>
+        <p>The Neo backend is a FastAPI server that runs on <code>localhost:8000</code>.</p>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="cmd">cd</span> Server
+<span class="cmd">pip install</span> -r requirements.txt
+<span class="cmd">python</span> -m uvicorn main:app --reload</code></pre>
+        </div>
+        <p class="docs-note">The server creates a local SQLite database automatically on first run. All your data stays on your machine.</p>
+      </div>
+
+      <div class="docs-card">
+        <h3>2. Open the macOS App</h3>
+        <p>Build and run the Xcode project, or open it via XcodeGen:</p>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="cmd">cd</span> App
+<span class="cmd">xcodegen</span> generate
+<span class="cmd">open</span> Neo.xcodeproj</code></pre>
+        </div>
+        <p>The app will automatically connect to <code>localhost:8000</code> when the server is running.</p>
+      </div>
+
+      <div class="docs-card">
+        <h3>3. Install the CLI (Optional)</h3>
+        <p>White Rabbit (<code>rabbit</code>) is Neo's command-line companion. Install it from source:</p>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="cmd">cd</span> CLI
+<span class="cmd">chmod</span> +x install.sh
+<span class="cmd">./install.sh</span>
+
+<span class="comment"># After installation, activate with:</span>
+<span class="cmd">wake up neo</span></code></pre>
+        </div>
+        <p class="docs-note">The install script builds the binary, copies it to <code>~/.local/bin</code>, and adds a <code>wake up neo</code> shell function to your <code>.zshrc</code>.</p>
+      </div>
+
+      <div class="docs-card">
+        <h3>4. Configure API Keys</h3>
+        <p>You need at least one LLM provider. Open the app and go to <strong>Settings</strong> (gear icon in toolbar).</p>
+        <div class="form-example">
+          <div class="form-title">Settings &rarr; API Keys</div>
+          <div class="form-row">
+            <span class="form-label">OpenAI API Key</span>
+            <span class="form-input">sk-proj-abc123def456...</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Claude API Key</span>
+            <span class="form-input">sk-ant-api03-xyz789...</span>
+          </div>
+        </div>
+        <p>For Ollama, install it from <a href="https://ollama.com" target="_blank">ollama.com</a> and pull a model. Neo auto-detects running Ollama instances.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- macOS APP -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section alt-bg" id="macos-app">
+    <div class="section-inner">
+      <div class="section-badge">02</div>
+      <h2>macOS App Guide</h2>
+      <p class="section-sub">Learn the interface: projects, teams, agents, workspace, and distribution.</p>
+
+      <!-- Projects -->
+      <div class="docs-card">
+        <h3>Creating a Project</h3>
+        <p>Click the <strong>+ New Project</strong> button in the sidebar.</p>
+        <div class="form-example">
+          <div class="form-title">New Project</div>
+          <div class="form-row">
+            <span class="form-label">Project Name</span>
+            <span class="form-input">My iOS App</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Description</span>
+            <span class="form-input">A social media app with real-time chat</span>
+          </div>
+          <div class="form-button">Create</div>
+        </div>
+        <p>Each project gets its own workspace, team, and WebSocket channel. You can have multiple projects active at the same time.</p>
+      </div>
+
+      <!-- Team Templates -->
+      <div class="docs-card">
+        <h3>Building a Team</h3>
+        <p>You can add agents one-by-one or apply a <strong>Team Template</strong> to get a pre-configured team instantly.</p>
+
+        <div class="docs-table">
+          <div class="table-title">Available Team Templates</div>
+          <table>
+            <thead>
+              <tr><th>Template</th><th>Agents</th><th>Best For</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>iOS Starter</td><td>PM, Designer, iOS Dev, QA</td><td>Small iOS projects</td></tr>
+              <tr><td>Full Stack</td><td>PM, Architect, Frontend, Backend, DevOps, QA</td><td>Web applications</td></tr>
+              <tr><td>ML Pipeline</td><td>PM, ML Engineer, Data Scientist, MLOps</td><td>Machine learning projects</td></tr>
+              <tr><td>Design Sprint</td><td>PM, UX Researcher, Designer, Frontend</td><td>UI/UX prototyping</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>To apply a template: click the <strong>Team Templates</strong> button in the toolbar, pick a template, and it auto-creates all agents for your project.</p>
+      </div>
+
+      <!-- Agent Config -->
+      <div class="docs-card">
+        <h3>Configuring an Agent</h3>
+        <p>Click on any agent card to open its detail panel. You can customize the LLM model, system prompt, and skills.</p>
+        <div class="form-example">
+          <div class="form-title">Agent Configuration</div>
+          <div class="form-row">
+            <span class="form-label">Name</span>
+            <span class="form-input">Alex</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Role</span>
+            <span class="form-input">ios_developer</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">LLM Provider</span>
+            <span class="form-input">openai</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">LLM Model</span>
+            <span class="form-input">gpt-4o</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Skills</span>
+            <span class="form-input">Swift, Xcode Build, Unit Test</span>
+          </div>
+        </div>
+        <p class="docs-note">You can mix different LLM providers within the same team. For example, use GPT-4o for coding agents and Claude for writing agents.</p>
+      </div>
+
+      <!-- Sending Tasks -->
+      <div class="docs-card">
+        <h3>Sending a Task</h3>
+        <p>Type your task in the workspace input bar at the bottom of the screen and press <strong>Enter</strong> or click the send button.</p>
+        <div class="task-examples">
+          <div class="task-example-title">Example Tasks</div>
+          <div class="task-item">
+            <span class="task-icon">💬</span>
+            <span class="task-text">Build the onboarding flow with 3 screens: welcome, permissions, and profile setup</span>
+          </div>
+          <div class="task-item">
+            <span class="task-icon">💬</span>
+            <span class="task-text">Add dark mode support to all views and create a settings toggle</span>
+          </div>
+          <div class="task-item">
+            <span class="task-icon">💬</span>
+            <span class="task-text">Design a dashboard mockup showing user stats and recent activity</span>
+          </div>
+          <div class="task-item">
+            <span class="task-icon">💬</span>
+            <span class="task-text">Write unit tests for the AuthenticationService and NetworkManager classes</span>
+          </div>
+        </div>
+        <p>Tasks are routed by role priority: Product Manager first, then Architect, Designer, Developer, DevOps, and finally QA/Tester.</p>
+      </div>
+
+      <!-- Real-time -->
+      <div class="docs-card">
+        <h3>Real-Time Activity Feed</h3>
+        <p>As agents work, you'll see live updates in the workspace:</p>
+        <div class="activity-demo">
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#818cf8"></span>
+            <span class="activity-agent">Kai (PM)</span>
+            <span class="activity-text">Analyzing requirements and creating subtasks...</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#f472b6"></span>
+            <span class="activity-agent">Maya (Designer)</span>
+            <span class="activity-text">Creating UI mockups for onboarding screens...</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#34d399"></span>
+            <span class="activity-agent">Alex (Developer)</span>
+            <span class="activity-text">Writing SwiftUI views based on design specs...</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#fbbf24"></span>
+            <span class="activity-agent">System</span>
+            <span class="activity-text">BUILD SUCCEEDED</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#a78bfa"></span>
+            <span class="activity-agent">Taylor (QA)</span>
+            <span class="activity-text">All tests passed. Build approved for deployment.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- CLI -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section" id="cli">
+    <div class="section-inner">
+      <div class="section-badge">03</div>
+      <h2>CLI &mdash; White Rabbit</h2>
+      <p class="section-sub">The <code>rabbit</code> CLI lets you manage projects, agents, and deployments from the terminal. It includes both Cobra subcommands and an interactive TUI dashboard.</p>
+
+      <!-- Launch -->
+      <div class="docs-card">
+        <h3>Launching the CLI</h3>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="comment"># Full TUI dashboard (interactive mode)</span>
+<span class="cmd">wake up neo</span>
+
+<span class="comment"># Or directly</span>
+<span class="cmd">rabbit</span>
+
+<span class="comment"># Individual commands (non-interactive)</span>
+<span class="cmd">rabbit</span> projects
+<span class="cmd">rabbit</span> agents 1
+<span class="cmd">rabbit</span> deploy status 1</code></pre>
+        </div>
+      </div>
+
+      <!-- Projects -->
+      <div class="docs-card">
+        <h3>Project Commands</h3>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="comment"># List all projects</span>
+<span class="cmd">rabbit</span> projects list
+
+<span class="comment"># Create a new project</span>
+<span class="cmd">rabbit</span> projects create --name "My App" --desc "An iOS weather app"
+
+<span class="comment"># Delete a project</span>
+<span class="cmd">rabbit</span> projects delete 3</code></pre>
+        </div>
+      </div>
+
+      <!-- Agents -->
+      <div class="docs-card">
+        <h3>Agent Commands</h3>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="comment"># List agents in project #1</span>
+<span class="cmd">rabbit</span> agents 1
+
+<span class="comment"># Create an agent from template</span>
+<span class="cmd">rabbit</span> agents create 1 --template 5 --name "Alex"
+
+<span class="comment"># Apply a team template to project #1</span>
+<span class="cmd">rabbit</span> team apply 1 --template 2</code></pre>
+        </div>
+      </div>
+
+      <!-- Task -->
+      <div class="docs-card">
+        <h3>Sending Tasks</h3>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="comment"># Send a task to project #1</span>
+<span class="cmd">rabbit</span> task 1 "Build the login screen with email and password fields"
+
+<span class="comment"># Send a task with workspace path</span>
+<span class="cmd">rabbit</span> task 1 "Add unit tests for UserService [workspace: ~/Projects/MyApp]"</code></pre>
+        </div>
+      </div>
+
+      <!-- TUI Commands -->
+      <div class="docs-card">
+        <h3>TUI Dashboard &mdash; Slash Commands</h3>
+        <p>Inside the interactive TUI, use <strong>/</strong> commands:</p>
+        <div class="docs-table">
+          <table>
+            <thead>
+              <tr><th>Command</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><code>/projects</code></td><td>List all projects</td></tr>
+              <tr><td><code>/select &lt;id&gt;</code></td><td>Select a project to work with</td></tr>
+              <tr><td><code>/agents</code></td><td>List agents in selected project</td></tr>
+              <tr><td><code>/team &lt;template-id&gt;</code></td><td>Apply a team template</td></tr>
+              <tr><td><code>/template</code></td><td>Browse available team templates</td></tr>
+              <tr><td><code>/keys</code></td><td>Manage API keys (OpenAI, Claude)</td></tr>
+              <tr><td><code>/status</code></td><td>Ollama and connection status</td></tr>
+              <tr><td><code>/deploy</code></td><td>Show deploy channel status</td></tr>
+              <tr><td><code>/deploy &lt;channel&gt;</code></td><td>Trigger deployment (github/email/testflight)</td></tr>
+              <tr><td><code>/deploy-settings &lt;channel&gt;</code></td><td>Configure project deploy settings</td></tr>
+              <tr><td><code>/deploy-credentials</code></td><td>Manage user-level deploy credentials</td></tr>
+              <tr><td><code>/help</code></td><td>Show all available commands</td></tr>
+              <tr><td><code>/quit</code></td><td>Exit the TUI</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- TUI Example Session -->
+      <div class="docs-card">
+        <h3>Example TUI Session</h3>
+        <div class="terminal-demo">
+          <div class="term-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="term-title">White Rabbit</span>
+          </div>
+          <div class="term-body">
+<pre>
+ <span class="t-dim">PROJECTS</span>
+ <span class="t-green">1</span> My iOS App        <span class="t-dim">A social media app with chat</span>
+ <span class="t-green">2</span> Data Pipeline     <span class="t-dim">ML data processing pipeline</span>
+
+&gt; <span class="t-accent">/select 1</span>
+<span class="t-success">Selected: My iOS App</span>
+
+&gt; <span class="t-accent">/agents</span>
+ <span class="t-dim">TEAM &middot; My iOS App</span>
+ <span class="t-yellow">&#x1f454;</span> Kai          <span class="t-dim">product_manager &middot; gpt-4o</span>
+ <span class="t-pink">&#x1f3a8;</span> Maya         <span class="t-dim">mobile_designer &middot; claude-sonnet-4-6</span>
+ <span class="t-blue">&#x1f4bb;</span> Alex         <span class="t-dim">ios_developer &middot; gpt-4o</span>
+ <span class="t-purple">&#x1f9ea;</span> Taylor       <span class="t-dim">qa &middot; claude-haiku-4-5</span>
+
+&gt; <span class="t-accent">/deploy</span>
+ <span class="t-dim">DEPLOY CHANNELS</span>
+  GitHub Pages:  <span class="t-success">&check; configured</span>
+  Email:         <span class="t-danger">&cross; not configured</span>
+  TestFlight:    <span class="t-success">&check; configured</span>
+
+&gt; Build the user profile screen with avatar, bio, and settings
+ <span class="t-dim">Task sent to 4 agents...</span>
+ <span class="t-yellow">&#x1f454; Kai</span> Analyzing requirements...
+ <span class="t-pink">&#x1f3a8; Maya</span> Creating mockup...
+ <span class="t-blue">&#x1f4bb; Alex</span> Writing SwiftUI views...
+ <span class="t-green">&check;</span> BUILD SUCCEEDED
+ <span class="t-purple">&#x1f9ea; Taylor</span> All tests passed. Build approved.
+ <span class="t-green">&check;</span> Deploying to TestFlight...
+ <span class="t-success">Task complete: 4/4 agents</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ollama -->
+      <div class="docs-card">
+        <h3>Ollama Commands</h3>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="comment"># Check Ollama status</span>
+<span class="cmd">rabbit</span> ollama status
+
+<span class="comment"># Start Ollama service</span>
+<span class="cmd">rabbit</span> ollama start
+
+<span class="comment"># List available models</span>
+<span class="cmd">rabbit</span> ollama models
+
+<span class="comment"># Pull a new model</span>
+<span class="cmd">rabbit</span> ollama pull llama3.1
+
+<span class="comment"># Delete a model</span>
+<span class="cmd">rabbit</span> ollama delete llama3.1</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- DEPLOYMENT -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section alt-bg" id="deployment">
+    <div class="section-inner">
+      <div class="section-badge">04</div>
+      <h2>Deployment & Distribution</h2>
+      <p class="section-sub">Configure and trigger deployments via GitHub Pages, Email, and TestFlight. Configuration is split between user-level credentials and project-level settings.</p>
+
+      <div class="info-banner">
+        <span class="info-icon">&#x2139;&#xFE0F;</span>
+        <div>
+          <strong>Config Split:</strong> Credentials (API keys, tokens, passwords) are stored <em>per-user</em> and shared across all projects. Project-specific settings (repo name, recipients, bundle ID) are stored <em>per-project</em>.
+        </div>
+      </div>
+
+      <!-- ── GitHub Pages ── -->
+      <div class="docs-card highlight-green">
+        <div class="channel-header">
+          <span class="channel-icon">&#x1F310;</span>
+          <h3>GitHub Pages</h3>
+        </div>
+        <p>Publish design mockups and HTML previews to a GitHub Pages site.</p>
+
+        <h4>Step 1: User Credentials (one-time)</h4>
+        <p>Go to <strong>Settings &rarr; Deploy Credentials &rarr; GitHub</strong> in the macOS app, or use the CLI:</p>
+
+        <div class="form-example">
+          <div class="form-title">Settings &rarr; Deploy Credentials &rarr; GitHub</div>
+          <div class="form-row">
+            <span class="form-label">Personal Access Token</span>
+            <span class="form-input secure">ghp_a1b2c3d4e5f6g7h8i9j0...</span>
+          </div>
+          <div class="form-button">Save Credentials</div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Set GitHub PAT (user-level, shared across projects)</span>
+<span class="cmd">rabbit</span> deploy credentials set --github-pat "ghp_a1b2c3d4e5f6g7h8i9j0"
+
+<span class="comment"># Or via TUI</span>
+<span class="cmd">/deploy-credentials github</span>
+Enter GitHub PAT: <span class="t-dim">ghp_a1b2c3d4e5f6g7h8i9j0</span>
+<span class="t-success">&check; GitHub PAT saved</span></code></pre>
+        </div>
+
+        <div class="docs-note">
+          <strong>How to get a GitHub PAT:</strong> Go to github.com &rarr; Settings &rarr; Developer settings &rarr; Personal access tokens &rarr; Tokens (classic) &rarr; Generate new token. Required scopes: <code>repo</code> (full access).
+        </div>
+
+        <h4>Step 2: Project Settings</h4>
+        <p>Open the project's <strong>Distribution</strong> panel (paperplane icon in toolbar) and fill in the GitHub Pages section:</p>
+
+        <div class="form-example">
+          <div class="form-title">Distribution &rarr; GitHub Pages</div>
+          <div class="form-row">
+            <span class="form-label">Repository (owner/repo)</span>
+            <span class="form-input">ebegen/my-app-preview</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Branch</span>
+            <span class="form-input">gh-pages</span>
+          </div>
+          <div class="form-button">Save</div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Configure GitHub Pages for project #1</span>
+<span class="cmd">rabbit</span> deploy github 1 --repo "ebegen/my-app-preview" --branch "gh-pages"
+
+<span class="comment"># TUI flow</span>
+<span class="cmd">/deploy-settings github</span>
+Enter repo (owner/repo): <span class="t-dim">ebegen/my-app-preview</span>
+Enter branch (enter to skip): <span class="t-dim">[enter]</span>
+<span class="t-success">&check; GitHub Pages project settings configured</span></code></pre>
+        </div>
+
+        <h4>Step 3: Deploy</h4>
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Trigger deployment</span>
+<span class="cmd">rabbit</span> deploy trigger 1 github
+<span class="t-success">&check; Published to https://ebegen.github.io/my-app-preview/</span>
+
+<span class="comment"># Or via TUI</span>
+<span class="cmd">/deploy github</span></code></pre>
+        </div>
+      </div>
+
+      <!-- ── Email ── -->
+      <div class="docs-card highlight-blue">
+        <div class="channel-header">
+          <span class="channel-icon">&#x2709;&#xFE0F;</span>
+          <h3>Email Notifications</h3>
+        </div>
+        <p>Send build and design update notifications to your team via email.</p>
+
+        <h4>Step 1: User Credentials (one-time)</h4>
+        <div class="form-example">
+          <div class="form-title">Settings &rarr; Deploy Credentials &rarr; Email</div>
+          <div class="form-row">
+            <span class="form-label">Provider</span>
+            <span class="form-input">resend</span>
+            <span class="form-hint">resend | sendgrid | smtp</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">API Key</span>
+            <span class="form-input secure">re_abc123def456...</span>
+          </div>
+          <div class="form-button">Save Credentials</div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Set email credentials (user-level)</span>
+<span class="cmd">rabbit</span> deploy credentials set \
+  --email-provider "resend" \
+  --email-api-key "re_abc123def456"
+
+<span class="comment"># TUI flow</span>
+<span class="cmd">/deploy-credentials email</span>
+Enter provider: <span class="t-dim">resend</span>
+Enter API key: <span class="t-dim">re_abc123def456</span>
+<span class="t-success">&check; Email credentials saved</span></code></pre>
+        </div>
+
+        <div class="docs-note">
+          <strong>Supported providers:</strong><br/>
+          &bull; <strong>Resend:</strong> Get your API key from <a href="https://resend.com" target="_blank">resend.com</a> &rarr; API Keys<br/>
+          &bull; <strong>SendGrid:</strong> Get your API key from SendGrid &rarr; Settings &rarr; API Keys<br/>
+          &bull; <strong>SMTP:</strong> Use any SMTP server (Gmail, Outlook, custom). Additional fields: host, port, user, password
+        </div>
+
+        <h4>Step 2: Project Settings</h4>
+        <div class="form-example">
+          <div class="form-title">Distribution &rarr; Email Notifications</div>
+          <div class="form-row">
+            <span class="form-label">Recipients (comma-separated)</span>
+            <span class="form-input">designer@team.com, pm@team.com, qa@team.com</span>
+          </div>
+          <div class="form-button">Save</div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Set recipients for project #1</span>
+<span class="cmd">rabbit</span> deploy email 1 --to "designer@team.com,pm@team.com,qa@team.com"
+
+<span class="comment"># TUI flow</span>
+<span class="cmd">/deploy-settings email</span>
+Enter recipients (comma-separated): <span class="t-dim">designer@team.com, pm@team.com</span>
+<span class="t-success">&check; Email recipients configured</span></code></pre>
+        </div>
+
+        <h4>Step 3: Send Notification</h4>
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="cmd">rabbit</span> deploy trigger 1 email
+<span class="t-success">&check; Email notification sent to 3 recipients</span></code></pre>
+        </div>
+      </div>
+
+      <!-- ── TestFlight ── -->
+      <div class="docs-card highlight-purple">
+        <div class="channel-header">
+          <span class="channel-icon">&#x2708;&#xFE0F;</span>
+          <h3>TestFlight</h3>
+        </div>
+        <p>Archive, export, and upload iOS/macOS builds to TestFlight with auto-versioning and beta group assignment.</p>
+
+        <h4>Step 1: Apple Credentials (one-time)</h4>
+        <p>You need an App Store Connect API key. Go to <a href="https://appstoreconnect.apple.com/access/integrations/api" target="_blank">App Store Connect &rarr; Users and Access &rarr; Integrations &rarr; App Store Connect API</a>.</p>
+
+        <div class="form-example">
+          <div class="form-title">Settings &rarr; Deploy Credentials &rarr; Apple</div>
+          <div class="form-row">
+            <span class="form-label">API Key ID</span>
+            <span class="form-input">ABC1234DEF</span>
+            <span class="form-hint">10-character alphanumeric ID from App Store Connect</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Issuer ID</span>
+            <span class="form-input secure">69a6de78-1234-47e3-e053-5b8c7c11a4d1</span>
+            <span class="form-hint">UUID shown at the top of the API Keys page</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">P8 Key Path</span>
+            <span class="form-input">~/.appstoreconnect/private_keys/AuthKey_ABC1234DEF.p8</span>
+            <span class="form-hint">Path to the .p8 file you downloaded from Apple</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Team ID (optional)</span>
+            <span class="form-input">A1B2C3D4E5</span>
+            <span class="form-hint">Your 10-character Apple Developer Team ID</span>
+          </div>
+          <div class="form-button">Save Credentials</div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Set Apple credentials (user-level, shared across projects)</span>
+<span class="cmd">rabbit</span> deploy credentials set \
+  --apple-key-id "ABC1234DEF" \
+  --apple-issuer-id "69a6de78-1234-47e3-e053-5b8c7c11a4d1" \
+  --apple-p8-key "~/.appstoreconnect/private_keys/AuthKey_ABC1234DEF.p8" \
+  --apple-team-id "A1B2C3D4E5"
+
+<span class="comment"># TUI flow</span>
+<span class="cmd">/deploy-credentials apple</span>
+Enter Apple API Key ID: <span class="t-dim">ABC1234DEF</span>
+Enter Issuer ID: <span class="t-dim">69a6de78-1234-47e3-e053-5b8c7c11a4d1</span>
+Enter .p8 key path: <span class="t-dim">~/.appstoreconnect/private_keys/AuthKey_ABC1234DEF.p8</span>
+Enter Team ID (enter to skip): <span class="t-dim">A1B2C3D4E5</span>
+<span class="t-success">&check; Apple credentials saved</span></code></pre>
+        </div>
+
+        <div class="docs-note">
+          <strong>How to create an App Store Connect API Key:</strong>
+          <ol>
+            <li>Go to <a href="https://appstoreconnect.apple.com/access/integrations/api" target="_blank">App Store Connect &rarr; Integrations &rarr; App Store Connect API</a></li>
+            <li>Click <strong>Generate API Key</strong></li>
+            <li>Name it (e.g., "Neo Deploy"), set role to <strong>Admin</strong> or <strong>Developer</strong></li>
+            <li>Download the <code>.p8</code> file (you can only download it once!)</li>
+            <li>Save it to <code>~/.appstoreconnect/private_keys/</code></li>
+            <li>Note the <strong>Key ID</strong> and <strong>Issuer ID</strong></li>
+          </ol>
+        </div>
+
+        <h4>Step 2: Project Settings</h4>
+        <div class="form-example">
+          <div class="form-title">Distribution &rarr; TestFlight</div>
+          <div class="form-row">
+            <span class="form-label">Bundle ID</span>
+            <span class="form-input">com.example.myapp</span>
+            <span class="form-hint">Must match your Xcode project's bundle identifier</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">Beta Group Name</span>
+            <span class="form-input">App Store Connect Users</span>
+            <span class="form-hint">Internal tester group name in App Store Connect</span>
+          </div>
+          <div class="form-row">
+            <span class="form-label">What to Test</span>
+            <span class="form-input">Please test the new onboarding flow and profile editing. Check for crashes on iOS 17.</span>
+            <span class="form-hint">Notes shown to testers in TestFlight app</span>
+          </div>
+          <div class="form-button">Save</div>
+        </div>
+
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Configure TestFlight for project #1</span>
+<span class="cmd">rabbit</span> deploy testflight 1 \
+  --bundle-id "com.example.myapp" \
+  --beta-group "App Store Connect Users" \
+  --what-to-test "Test onboarding flow and profile editing"
+
+<span class="comment"># TUI flow</span>
+<span class="cmd">/deploy-settings testflight</span>
+Enter Bundle ID (com.example.app): <span class="t-dim">com.example.myapp</span>
+Enter beta group name (enter for default): <span class="t-dim">[enter]</span>
+Enter what-to-test notes (enter to skip): <span class="t-dim">Test the new login screen</span>
+<span class="t-success">&check; TestFlight project settings configured</span></code></pre>
+        </div>
+
+        <h4>Step 3: Deploy</h4>
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="cmd">rabbit</span> deploy trigger 1 testflight
+<span class="t-dim">Incrementing build number...</span>
+<span class="t-dim">Archiving...</span>
+<span class="t-dim">Exporting IPA...</span>
+<span class="t-dim">Uploading to App Store Connect...</span>
+<span class="t-dim">Assigning to beta group: App Store Connect Users...</span>
+<span class="t-success">&check; Build 202603061430 uploaded to TestFlight</span></code></pre>
+        </div>
+
+        <div class="docs-note">
+          <strong>Auto-versioning:</strong> Neo automatically increments the build number using a timestamp format (<code>YYYYMMDDHHmm</code>) before each upload. This ensures every build has a unique version number in TestFlight.
+        </div>
+      </div>
+
+      <!-- Deploy Status -->
+      <div class="docs-card">
+        <h3>Checking Deploy Status</h3>
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Check which channels are fully configured</span>
+<span class="cmd">rabbit</span> deploy status 1
+
+Deploy Channels
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  GitHub Pages:  <span class="t-success">&check; configured</span>
+  Email:         <span class="t-success">&check; configured</span>
+  TestFlight:    <span class="t-danger">&cross; not configured</span>
+
+<span class="comment"># Check credential status</span>
+<span class="cmd">rabbit</span> deploy credentials status
+
+Deploy Credentials
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+  Apple (TestFlight):  <span class="t-success">&check; configured</span>
+  GitHub:              <span class="t-success">&check; configured</span>
+  Email:               <span class="t-danger">&cross; not configured</span></code></pre>
+        </div>
+        <p>A channel shows as "configured" only when <em>both</em> user-level credentials and project-level settings are present.</p>
+      </div>
+
+      <!-- Removing Config -->
+      <div class="docs-card">
+        <h3>Removing Configuration</h3>
+        <div class="code-block">
+          <div class="code-header">CLI</div>
+<pre><code><span class="comment"># Remove a project-level channel config</span>
+<span class="cmd">rabbit</span> deploy remove 1 github
+<span class="t-success">&check; github configuration removed</span>
+
+<span class="comment"># Remove all user-level credentials</span>
+<span class="cmd">rabbit</span> deploy credentials delete
+<span class="t-success">&check; All deploy credentials removed</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- SETTINGS -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section" id="settings">
+    <div class="section-inner">
+      <div class="section-badge">05</div>
+      <h2>Settings & Credentials</h2>
+      <p class="section-sub">Neo separates configuration into two layers for security and convenience.</p>
+
+      <div class="two-col">
+        <div class="docs-card">
+          <h3>User-Level (Settings)</h3>
+          <p>Stored once, shared across all your projects. Managed via the Settings panel (gear icon) or <code>/deploy-credentials</code>.</p>
+          <div class="docs-table compact">
+            <table>
+              <thead><tr><th>Field</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>OpenAI API Key</td><td><code>sk-proj-abc123...</code></td></tr>
+                <tr><td>Claude API Key</td><td><code>sk-ant-api03-xyz...</code></td></tr>
+                <tr><td>Apple API Key ID</td><td><code>ABC1234DEF</code></td></tr>
+                <tr><td>Apple Issuer ID</td><td><code>69a6de78-...</code></td></tr>
+                <tr><td>Apple P8 Key Path</td><td><code>~/.appstoreconnect/...</code></td></tr>
+                <tr><td>Apple Team ID</td><td><code>A1B2C3D4E5</code></td></tr>
+                <tr><td>GitHub PAT</td><td><code>ghp_a1b2c3...</code></td></tr>
+                <tr><td>Email Provider</td><td><code>resend</code></td></tr>
+                <tr><td>Email API Key</td><td><code>re_abc123...</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="docs-card">
+          <h3>Project-Level (Distribution)</h3>
+          <p>Configured per-project via the Distribution panel (paperplane icon) or <code>/deploy-settings</code>.</p>
+          <div class="docs-table compact">
+            <table>
+              <thead><tr><th>Field</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>GitHub Repo</td><td><code>ebegen/my-app-preview</code></td></tr>
+                <tr><td>GitHub Branch</td><td><code>gh-pages</code></td></tr>
+                <tr><td>Email Recipients</td><td><code>team@company.com</code></td></tr>
+                <tr><td>Bundle ID</td><td><code>com.example.myapp</code></td></tr>
+                <tr><td>Beta Group Name</td><td><code>App Store Connect Users</code></td></tr>
+                <tr><td>What to Test</td><td><code>Test the login flow</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="docs-card">
+        <h3>CLI Configuration</h3>
+        <p>The CLI stores its connection settings in <code>~/.neo/config.toml</code>:</p>
+        <div class="code-block">
+          <div class="code-header">~/.neo/config.toml</div>
+<pre><code>host = "localhost"
+port = 8000
+scheme = "http"</code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-header">Terminal</div>
+<pre><code><span class="comment"># Change server address</span>
+<span class="cmd">rabbit</span> config set host 192.168.1.100
+<span class="cmd">rabbit</span> config set port 8000
+
+<span class="comment"># Set API keys</span>
+<span class="cmd">rabbit</span> config set-key openai sk-proj-abc123...
+<span class="cmd">rabbit</span> config set-key claude sk-ant-api03-xyz...</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- QA GATE -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section alt-bg" id="qa-gate">
+    <div class="section-inner">
+      <div class="section-badge">06</div>
+      <h2>QA Gate & DevOps Flow</h2>
+      <p class="section-sub">Neo includes a quality gate that ensures builds are approved before deployment.</p>
+
+      <div class="docs-card">
+        <h3>How It Works</h3>
+        <div class="flow-diagram">
+          <div class="flow-step">
+            <div class="flow-icon" style="background:rgba(59,130,246,.15);color:#60a5fa">&#x1F4BB;</div>
+            <div class="flow-label">Developer</div>
+            <div class="flow-desc">Writes code, builds the project</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">
+            <div class="flow-icon" style="background:rgba(34,197,94,.15);color:#4ade80">&#x2705;</div>
+            <div class="flow-label">Build Check</div>
+            <div class="flow-desc">Auto-build verification</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">
+            <div class="flow-icon" style="background:rgba(168,85,247,.15);color:#c084fc">&#x1F9EA;</div>
+            <div class="flow-label">QA / Tester</div>
+            <div class="flow-desc">Reviews & approves build</div>
+          </div>
+          <div class="flow-arrow">&rarr;</div>
+          <div class="flow-step">
+            <div class="flow-icon" style="background:rgba(245,158,11,.15);color:#fbbf24">&#x2699;&#xFE0F;</div>
+            <div class="flow-label">DevOps</div>
+            <div class="flow-desc">Handles deployment</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="docs-card">
+        <h3>QA Approval</h3>
+        <p>After all agents complete their work, Neo checks the QA/Tester agent's response for approval signals:</p>
+        <div class="two-col">
+          <div class="approval-list">
+            <div class="approval-title approve">&#x2705; Approval signals</div>
+            <ul>
+              <li>"Approved"</li>
+              <li>"All tests passed"</li>
+              <li>"LGTM" (Looks Good To Me)</li>
+              <li>"Build is good / stable / clean"</li>
+              <li>"Ready for deploy / release"</li>
+              <li>"Ship it"</li>
+            </ul>
+          </div>
+          <div class="approval-list">
+            <div class="approval-title reject">&#x274C; Rejection signals</div>
+            <ul>
+              <li>"Rejected"</li>
+              <li>"Failed" / "Blocked"</li>
+              <li>"Critical bug / issue"</li>
+              <li>"Not ready"</li>
+              <li>"Do not deploy"</li>
+              <li>"Must fix" / "Needs fix"</li>
+            </ul>
+          </div>
+        </div>
+        <p class="docs-note">Rejection always takes precedence over approval. If the QA agent mentions both approval and critical issues, deployment is blocked.</p>
+      </div>
+
+      <div class="docs-card">
+        <h3>Deployment Scenarios</h3>
+        <div class="docs-table">
+          <table>
+            <thead><tr><th>Scenario</th><th>Build</th><th>QA Agent</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Happy path</td><td>&#x2705; Succeeded</td><td>&#x2705; Approved</td><td><span class="pill green">Deploy triggered</span></td></tr>
+              <tr><td>QA rejects</td><td>&#x2705; Succeeded</td><td>&#x274C; Rejected</td><td><span class="pill red">Deploy blocked</span></td></tr>
+              <tr><td>Build failed</td><td>&#x274C; Failed</td><td>&mdash;</td><td><span class="pill red">No deployment</span></td></tr>
+              <tr><td>No QA in team</td><td>&#x2705; Succeeded</td><td>&mdash;</td><td><span class="pill yellow">Auto-approved</span></td></tr>
+              <tr><td>No deploy config</td><td>&#x2705; Succeeded</td><td>&#x2705; Approved</td><td><span class="pill grey">Nothing to deploy</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="docs-note">If there's no QA/Tester agent in the team, the build is auto-approved for deployment. Add a QA agent to enforce the approval gate.</p>
+      </div>
+
+      <div class="docs-card">
+        <h3>DevOps Attribution</h3>
+        <p>When deployment triggers, it's attributed to the <strong>DevOps Engineer</strong> agent in your team. If there's no DevOps agent, it's attributed to "System".</p>
+        <div class="activity-demo">
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#fbbf24"></span>
+            <span class="activity-agent">DevOps Agent</span>
+            <span class="activity-text">Starting deployment (QA approved by Taylor)...</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#34d399"></span>
+            <span class="activity-agent">DevOps Agent</span>
+            <span class="activity-text">Uploading to TestFlight...</span>
+          </div>
+          <div class="activity-item">
+            <span class="activity-dot" style="background:#34d399"></span>
+            <span class="activity-agent">DevOps Agent</span>
+            <span class="activity-text">Sending build notification email...</span>
+          </div>
+        </div>
+        <p>You can still trigger manual deployments anytime via the Distribution panel or <code>/deploy &lt;channel&gt;</code>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <!-- QUICK REFERENCE -->
+  <!-- ══════════════════════════════════════════════════════════════════════ -->
+  <section class="docs-section" id="reference">
+    <div class="section-inner">
+      <div class="section-badge">Reference</div>
+      <h2>Quick Reference</h2>
+
+      <div class="docs-card">
+        <h3>All CLI Commands</h3>
+        <div class="docs-table">
+          <table>
+            <thead><tr><th>Command</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><code>rabbit</code></td><td>Launch interactive TUI dashboard</td></tr>
+              <tr><td><code>rabbit projects list</code></td><td>List all projects</td></tr>
+              <tr><td><code>rabbit projects create --name "X"</code></td><td>Create a new project</td></tr>
+              <tr><td><code>rabbit projects delete &lt;id&gt;</code></td><td>Delete a project</td></tr>
+              <tr><td><code>rabbit agents &lt;project-id&gt;</code></td><td>List agents in a project</td></tr>
+              <tr><td><code>rabbit agents create &lt;proj&gt; --template &lt;id&gt;</code></td><td>Add agent from template</td></tr>
+              <tr><td><code>rabbit team apply &lt;proj&gt; --template &lt;id&gt;</code></td><td>Apply team template</td></tr>
+              <tr><td><code>rabbit task &lt;proj&gt; "task text"</code></td><td>Send a task to project</td></tr>
+              <tr><td><code>rabbit deploy status &lt;proj&gt;</code></td><td>Show channel readiness</td></tr>
+              <tr><td><code>rabbit deploy credentials status</code></td><td>Show credential status</td></tr>
+              <tr><td><code>rabbit deploy credentials set --flags</code></td><td>Set user-level credentials</td></tr>
+              <tr><td><code>rabbit deploy credentials delete</code></td><td>Remove all credentials</td></tr>
+              <tr><td><code>rabbit deploy github &lt;proj&gt; --repo "X"</code></td><td>Configure GitHub Pages</td></tr>
+              <tr><td><code>rabbit deploy email &lt;proj&gt; --to "X"</code></td><td>Configure email recipients</td></tr>
+              <tr><td><code>rabbit deploy testflight &lt;proj&gt; --bundle-id "X"</code></td><td>Configure TestFlight</td></tr>
+              <tr><td><code>rabbit deploy trigger &lt;proj&gt; &lt;channel&gt;</code></td><td>Trigger deployment</td></tr>
+              <tr><td><code>rabbit deploy remove &lt;proj&gt; &lt;channel&gt;</code></td><td>Remove channel config</td></tr>
+              <tr><td><code>rabbit ollama status</code></td><td>Check Ollama status</td></tr>
+              <tr><td><code>rabbit ollama models</code></td><td>List installed models</td></tr>
+              <tr><td><code>rabbit ollama pull &lt;model&gt;</code></td><td>Download a model</td></tr>
+              <tr><td><code>rabbit config set &lt;key&gt; &lt;value&gt;</code></td><td>Set config value</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="docs-card">
+        <h3>API Endpoints</h3>
+        <div class="docs-table">
+          <table>
+            <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+            <tbody>
+              <tr><td><span class="method get">GET</span></td><td><code>/projects</code></td><td>List all projects</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code>/projects</code></td><td>Create a project</td></tr>
+              <tr><td><span class="method del">DEL</span></td><td><code>/projects/{id}</code></td><td>Delete a project</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code>/projects/{id}/agents</code></td><td>List project agents</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code>/projects/{id}/agents</code></td><td>Create an agent</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code>/config/deploy-credentials</code></td><td>Check credential status</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code>/config/deploy-credentials</code></td><td>Save credentials</td></tr>
+              <tr><td><span class="method del">DEL</span></td><td><code>/config/deploy-credentials</code></td><td>Remove credentials</td></tr>
+              <tr><td><span class="method get">GET</span></td><td><code>/projects/{id}/deploy/status</code></td><td>Channel readiness</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code>/projects/{id}/deploy/{ch}</code></td><td>Save channel config</td></tr>
+              <tr><td><span class="method del">DEL</span></td><td><code>/projects/{id}/deploy/{ch}</code></td><td>Remove channel config</td></tr>
+              <tr><td><span class="method post">POST</span></td><td><code>/projects/{id}/deploy/trigger</code></td><td>Trigger deployment</td></tr>
+              <tr><td><span class="method ws">WS</span></td><td><code>/ws/{projectId}</code></td><td>Real-time events</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="logo">
+        <span class="logo-mark">N</span>
+        <span class="logo-text">Neo</span>
+      </div>
+      <p class="footer-copy">Built with SwiftUI & FastAPI &middot; 2026</p>
+      <a href="https://github.com/ebegen/Neo-site" target="_blank" class="footer-gh">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+    </div>
+  </footer>
+
+</body>
+</html>
